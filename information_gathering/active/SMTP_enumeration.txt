@@ -1,0 +1,9 @@
+==============
+verify request
+==============
+nc -nv <target ip> 25
+
+======
+script
+======
+vrfy.py

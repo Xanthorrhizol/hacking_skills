@@ -1,0 +1,14 @@
+=======================
+scanning for NFS shares
+=======================
+nmap -sV -p 111 --script=rpcinfo <target ip range>
+
+====================
+nmap NFS NSE scripts
+====================
+search
+	ls -l /usr/share/nmap/scripts/nfs*
+run script
+	nmap -p 111 --sccript nfs* <target ip>
+mount NFS sharepoint
+	sudo mount -o nolock <target ip>:<directory> <mountpoint>

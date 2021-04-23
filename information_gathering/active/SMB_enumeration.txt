@@ -1,0 +1,17 @@
+================================
+scanning for the NetBIOS service
+================================
+NetBIOS : session layer protocol to communicate with each other in the local network
+	nmap -v -p 139,445 -oG <output file> <target ip range>
+	sudo nbtscan -r <target ip/subnet>
+		-r : udp 137
+
+====================
+nmap SMB NSE scripts
+====================
+search the script
+	nmap -l /usr/share/nmap/scripts/smb*
+	ls /usr/share/nmap/scripts/smb*
+run the script
+	nmap -v -p 139,445 --script=<module> <target ip>
+		--script-args=unsafe=1 : [danger] can crash the target system
