@@ -8,3 +8,4 @@ password dumps
 ==============
 rockyou or etc
 /usr/share/wordlists/
+/usr/share/seclists/
