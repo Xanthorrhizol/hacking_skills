@@ -1,0 +1,10 @@
+================
+email harvesting
+================
+theharvester -d <url> -b <data source to search>
+
+==============
+password dumps
+==============
+rockyou or etc
+/usr/share/wordlists/

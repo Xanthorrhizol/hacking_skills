@@ -1,0 +1,12 @@
+===============
+social-searcher
+===============
+https://www.social-searcher.com
+
+===================
+site-specific tools
+===================
+twitter
+	https://digi.ninja/projects/twofi.php : make wordlist from the account
+linkedin
+	https://github.com/initstring/linkedin2username : generating username list from linkedin account

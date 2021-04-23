@@ -1,0 +1,7 @@
+provide secuity informations of the site
+https://www.shodan.io
+
+======
+search
+======
+hostname:<url>

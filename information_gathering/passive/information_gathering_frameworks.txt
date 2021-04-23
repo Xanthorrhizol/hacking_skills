@@ -1,0 +1,10 @@
+===============
+OSINT framework
+===============
+https://osintframework.com
+
+=======
+maltego
+=======
+https://www.paterva.com/index.php
+super powerful

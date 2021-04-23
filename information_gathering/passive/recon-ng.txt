@@ -1,0 +1,37 @@
+=====
+start
+=====
+recon-ng
+
+==========
+add module
+==========
+search
+	marketplace search <keyword>
+	columns
+		K : require credentials or api keys for 3rd party providers
+			( some keys : https://github.com/lanmaster53/recon-ng-marketplace/wiki/API-Keys )
+info
+	marketplace info <path>
+install
+	marketplace install <path>
+
+==========
+use module
+==========
+load
+	modules load <path>
+
+info
+	info
+set url
+	options set SOURCE <url>
+run
+	run
+unload
+	back
+
+==============
+useful modules
+==============
+recon/hosts-hosts/resolve : resolves the ip address for a host

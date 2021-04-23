@@ -1,0 +1,4 @@
+scan ssl/tls configuration
+https://www.ssllabs.com/ssltest/
+
+just search

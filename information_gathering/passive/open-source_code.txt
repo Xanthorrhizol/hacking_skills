@@ -1,0 +1,18 @@
+======
+github
+======
+search repo of known user
+	https://github.com/<username>/
+search with options
+	filename:<filename>
+	user:<username>
+automated github searching tool
+	https://github.com/michenriksen/gitrob
+	https://gihtub.com/zricethezav/gitleaks
+======
+gitlab
+======
+===========
+sourceforge
+===========
+same
