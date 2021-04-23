@@ -1,0 +1,53 @@
+=============================
+Interacting with a DNS server
+=============================
+basic
+	host <url>
+search specific record
+	host -t <type of record> <url>
+		ns : nameserver
+		a : a record
+		mx : mail exchange record
+		spf : sender policy framework
+		cname : domain forwarding
+		txt : description
+		...
+
+==================
+automating lookups
+==================
+make script using host command
+if found, has address <ip>
+else, not found: 3(NXDOMAIN)
+
+==========================
+forward lookup brute force
+==========================
+for ip in $(cat <wordlist>); do host $ip.<domain>; done | grep -v "not found"
+
+==========================
+reverse lookup brute force
+==========================
+for ip in $(seq <port from> <port to>); do host <three octats of ip>.$ip; done | grep -v "not found"
+
+==================
+DNS zone transfers
+==================
+host -l <domain> <dns server address>
+
+======
+script
+======
+dns-axfr.sh
+
+============================
+Relevant tools in kali linux
+============================
+DNSRecon
+	dnsrecon -d <domain> -t axfr
+	-t : type
+		axfr : zone transfer
+		brt : bruteforce
+	-D : wordlist
+DNSenum
+	dnsenum <domain>

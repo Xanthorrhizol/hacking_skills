@@ -1,0 +1,48 @@
+==================
+TCP / UDP scanning
+==================
+can use netcat
+TCP scanning
+	1. run wireshark and filter by host <target ip> and not arp
+	2. nc -nvv -w 1 -z <target ip> <port range>
+		-w : timeout
+		-z : zero io mode(send no data)
+	3. find SYN, ACK packet
+
+UDP scanning
+	1. run wireshark and filter by host <target ip> and not arp
+	2. nc -nv -u -z -w 1 <target ip> <port range>
+		-u : udp
+	3. If the port is closed, ICMP unreachable is shown.
+		can false positive if the firewall filtered the packet(it doesn't send ICMP unreachable packet)
+
+====
+nmap
+====
+accountability for our traffic
+	nmap <target ip>
+		-p <port range> : port range
+		-sS : [sudo] Stealth / SYN scanning (not reach to application layer --> no log)
+		-sT : TCP connect scanning
+		-sU : [sudo] UDP scanning
+
+network sweeping
+		-sn <target ip range> : network sweeping
+		--top-ports=<# of ports>
+		-oG <filename> : save output into file
+			ex. nmap -sn <target ip range> -oG <output file>
+			    grep Up <filename> | cut -d " " -f 2 | head
+
+OS fingerprinting
+		-O : OS fingerprinting
+		* not 100% reliable
+
+banner grabbing / service enumeration
+		-sV : probs the opened port to determine the service & version information
+		* the banner can modified by the system administrator
+
+Nmap Scripting Engine(NSE)
+		--script=<script name> : run script
+			ex. smb-os-discovery, dns-zone-transfer
+		--script-help : help
+	* script location : /usr/share/nmap/scripts/

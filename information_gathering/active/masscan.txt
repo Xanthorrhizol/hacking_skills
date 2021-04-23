@@ -1,0 +1,4 @@
+need to install
+	sudo apt install masscan
+
+sudo masscan -p<port> <network/subnet> --rate=<rate> -e <network interface> --router-ip <my gateway ip>

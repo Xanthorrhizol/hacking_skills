@@ -1,0 +1,3 @@
+/usr/share/wordlists/
+/usr/share/seclists/
+	sudo apt install seclists
