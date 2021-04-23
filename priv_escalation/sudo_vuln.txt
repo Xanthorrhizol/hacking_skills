@@ -1,0 +1,4 @@
+1. If I pass the uid < 0, it reverts to uid = 0
+	example
+	sudo -u#-1 /usr/bin/vi /home/gwendoline/user.txt
+	:!<command>

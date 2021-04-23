@@ -1,0 +1,14 @@
+============================================
+	Json Web Token
+============================================
+1. algorithms
+RS256 - No vulnerability
+HS256 & None - vulnerable
+	use decode/encode web site => edit JWT => update cookie
+
+2. JWT HS256 format
+HMACSHA256( base64UrlEncode(header) + "." + base64UrlEncode(payload), secret )
+	**it can be brute forced
+
+3. Bruteforcing JWT tokens
+	jwt-cracker <token> [<alphabet>] [<maxLength>]

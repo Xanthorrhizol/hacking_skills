@@ -1,0 +1,6 @@
+================================================
+	Insecure Direct Object Reference
+================================================
+the act of exploiting a misconfiguration in the way user input is handled to access resources I wouldn't ordinarily be able to access
+ex. https://example.com/bank?account_number=1234
+

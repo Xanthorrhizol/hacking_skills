@@ -1,0 +1,4 @@
+===================
+binary to decimal
+===================
+echo "$((2#<binary number>))"

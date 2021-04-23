@@ -1,0 +1,16 @@
+==============================
+	WIFI hacking
+==============================
+1. Terms
+	SSID	 : the network name
+	ESSID	 : and SSID that may apply to multiple access points, eg a company office, nomally forming a bigger network. for aircrack they normally refer to the network I'm attacking.
+	BSSID	 : an access point MAC address
+	WPA2-PSK : Wifi networks that I connect to by providing a password that's the same for everyone
+	WPA2-EAP : Wifi networks that I authenticate to by providing a username and password, which is sent to a RADIUS server
+	RADIUS	 : a server for authenticating clients, not just for wifi.
+
+2. vulnerability
+	WEP(Wired Equipment Privacy) : can be broken by capturing enough packets to guess the key via statistical methods.
+	WPA(Wi-Fi Protected Access): 4 way handshake allow the client and the AP to both prove that they know they key, without telling each other. WPA & WPA2 use pratically the same authentication method, so the attacks on both are the same. ESSID acts as a salt, making dictionary attacks more difficult.
+
+

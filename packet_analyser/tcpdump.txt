@@ -1,0 +1,35 @@
+===========================
+open pcap file
+===========================
+sudo tcpdump -r <filename>
+
+===========================
+filtering traffic
+===========================
+option -n
+
+1. ip addresses
+	sudo tcpdump -n -r <filename> | awk -F" " '<print $3>' | sort | uniq -c
+
+2.  host
+	sudo tcpdump -n src host <target ip> -r <filename>
+	sudo tcpdump -n dst host <target ip> -r <filename>
+
+3. port
+	sudo tcpdump -n port <target port> -r <filename>
+
+4. dump : -X
+	sudo tcpdump -nX -r <filename> | less
+
+5. print in ASCII format : -A
+	sudo tcpdump -A -r <filename>
+
+===========================
+advanced header filtering
+===========================
+1. get header wild card
+		CWR ECE URG ACK PSH RST SYN FIN
+	ex.	0   0   0   1   1   0   0   0
+		echo "$((2#00011000))"
+2. run command
+	sudo tcpdump -A -n 'tcp[13] = <whildcard>' -r <filename>

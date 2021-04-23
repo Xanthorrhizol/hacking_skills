@@ -1,0 +1,7 @@
+https://www.netcraft.com
+
+=============
+DNS searching
+=============
+https://searchdns.netcraft.com
+it has site reports of website

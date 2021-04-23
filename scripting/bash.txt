@@ -1,0 +1,163 @@
+========
+variable
+========
+declare(default : global)
+	name=value
+local
+	local name=value
+
+======
+quotes
+======
+single : can't use variable in it
+double : can use variable in it
+
+==========================
+save command into variable
+==========================
+name=$(command)
+
+==================
+print debug output
+==================
+#!/bin/bash -x
++ : excuted at shell
+++ : excuted at subshell
+
+=========
+arguments
+=========
+argv
+$0 : name of the script
+$1 : argv 1
+$2 : argv 2
+$# : argc
+$RANDOM : random number
+
+==================
+reading user input
+==================
+read variable
+read -p string variable : print string and read user input
+read -s variable : silent
+
+=========
+condition
+=========
+if [ <some test> ]
+then
+~~~
+elif [ <some test> ]
+then
+~~~
+else
+~~~
+fi
+
+-gt : grater than	>
+-ge : grater or equal	>=
+-lt : less than		<
+-le : less or equal	<=
+-eq : equal to		==
+-ne : not equal to	!=
+
+==========================
+boolean logical operations
+==========================
+<some command> && <command if true> || <command if false>
+if [ <some test> ] && [ <some test> ]
+if [ <some test> ] || [ <some test> ]
+
+=====
+range
+=====
+seq <start number> <end number>
+{<start number>..<end number>}
+
+=====
+loops
+=====
+1. for loops
+	for var-name in <list>
+	do
+	~~~
+	done
+
+	ex.for ip in $(seq 1 10); do echo 10.11.1.$ip; done
+
+2. while loops
+	while [ <some test> ]
+	do
+	~~~
+	done
+
+=========
+functions
+=========
+function function_name {
+~~~
+}
+
+function_name () {
+~~~
+}
+
+$? : returned value
+
+** () is just a decoration. use arguments instead
+
+=========
+filtering
+=========
+grep <string to find> <target>
+grep -o <regexp> <target>
+awk <delimeter> : cut by delimeter (if empty, cut by tab)
+	-F : multi character delimeter
+	result : [<str1>, <str2>]
+	{print $2} : print <str2>
+cut -d <delimeter> : cut by delimeter
+	-f <number> : print Nth component
+sed : replace the string to other
+
+==================
+regular expression
+==================
+^ : except
+	ex. [^/] : except /
+* : any
+
+====
+host
+====
+get ip address from url
+
+============
+searchsploit
+============
+searchsploit <search string>
+	-w : return the URL rather than the local path
+	-t : search by exploit title
+searchsploit <search string> -w -t | grep http | cut -f 2 -d "|"
+for e in $(searchsploit <search string> -w -t | grep http | cut -f -2 -d "|")
+do
+	exp_name=$(echo $e | cut -d "/" -f 5) && url=$(echo $e | sed 's/exploits/raw/') && wget -q --no-check-certificate $url -O $exp_name
+done
+
+====
+nmap
+====
+-A : aggressive
+-p : limit port
+--open : only return machine that has opened port
+-oG : save the output in grabable format
+ex.
+sudo nmap -A -p80 --open 10.11.1.0/24 -oG nmap-scan_10.11.1.1-254
+cat nmap-scan_10.11.1.1-254 | grep 80 | grep -v "Nmap" | less
+cat nmap-scan_10.11.1.1-254 | grep 80 | grep -v "Nmap" | awk {print $2}
+for ip in $(cat nmap-scan_10.11.1.1-254 | grep 80 | grep -v "Nmap" | awk {print $2}); do cutycapt --url=$ip --out=$ip.png; done
+
+========
+cutycapt
+========
+make screenshot of the webpage
+cutycapt --url=<url> --out=<filename>

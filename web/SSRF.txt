@@ -1,0 +1,17 @@
+=================================================
+	Server-Side Forgery Request
+=================================================
+Vulnerability in web applications whereby an attacker can make further HTTP requests through the server. An attacker can make use of this vulnerability to communicate with any internal services on the server's network which are generally protected by firewalls.
+
+	     Firewall
+	(80, 443 allowed)
+		||
+	Attacker can see
+	the website		┌─────────> Postgres
+		||		│ 
+Attacker <--------------> Vulnerable web app (Only the web app can talk with DB and gitlab)
+		||		│
+		||		└─────────> Internal Gitlab
+		||
+
+

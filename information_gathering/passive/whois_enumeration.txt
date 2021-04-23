@@ -1,0 +1,10 @@
+==============
+forward lookup
+==============
+whois <domain name>
+
+==============
+reverse lookup
+==============
+whois <domain name or ip address>
+

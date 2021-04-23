@@ -1,0 +1,15 @@
+===============================
+	Forced Browsing
+===============================
+the art of using logic to find resources on the website that I would not normally be able to access.
+ex. http://example.com/user1/note.txt (403) | http://example.com/user2/note.txt (200)
+
+tool - wfuzz
+	ex. wfuzz -c -z file,/usr/share/wordlists/dirb/big.txt example.com:80/FUZZ/note.txt
+	options
+	-c	: shows the output color
+	-z	: specifies what will replace FUZZ in the request
+	--hc	: don't show certain http response codes
+	--hl	: don't show a certain amount of lines in the response
+	--hh	: don't show a certain amount of words
+	--hw	: hide words(insert failed page's # of words)

