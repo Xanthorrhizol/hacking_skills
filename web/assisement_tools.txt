@@ -1,0 +1,24 @@
+====
+dirb
+====
+
+USAGE : dirb <url to scan>
+	-r : not recursivly
+	-z <time to milliseconds>: time to delay to each request
+
+==========
+burp suite
+==========
+GUI tool with proxy
+when use https protocol
+	proxy - options - generate certificate - restart burp
+	http://burp - CA Certificate - download - trust the CA certificate
+	
+=====
+nikto
+=====
+highly configurable open-source web server scanner
+*not degiened for stelth
+nikto -host=<target url>
+	-maxtime <time in seconds>s : time limit
+	-T <type of test>

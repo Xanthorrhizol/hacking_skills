@@ -1,0 +1,8 @@
+1. gather information about the application
+	what does the application do
+	what language is it written in
+	what server software is the application running on
+
+2. grant access
+
+3. increase the permission

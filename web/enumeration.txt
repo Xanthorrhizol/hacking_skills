@@ -1,0 +1,43 @@
+=====================
+information gathering
+=====================
+target
+	programming language and frameworks
+	web server software
+	database software
+	server operating system
+
+===============
+inspecting urls
+===============
+get information from file extention
+.php : php
+.jsp, .do, .html : java
+* nowadays, route concepts are commonly used. so this method has limit
+
+=======================
+inspecting page content
+=======================
+get information from source of the web page
+right click and click "inspect element" then it inspect the element in the source
+*firefox has "pretty print source" function. use it by clicking "{ }" button in debugger tab
+
+========================
+viewing response headers
+========================
+developer tool's network tab
+	server header will often review the name of the server software and sometimes the version number
+	header that starts with "X-" has additional information that application uses
+
+===================
+inspecting sitemaps
+===================
+robots.txt
+sitemaps.xml
+
+================================
+locating administration consoles
+================================
+tomcat
+phpmyadmin
+default credentials : /usr/share/seclists/Passwords/Default-Credentials
