@@ -4,4 +4,5 @@
 just memo  
 
 ## steps
-categorized by step
+categorized by step  
+there are many symbolic links
