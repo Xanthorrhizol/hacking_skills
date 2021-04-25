@@ -54,12 +54,12 @@ else
 ~~~
 fi
 
--gt : grater than	>
--ge : grater or equal	>=
--lt : less than		<
--le : less or equal	<=
--eq : equal to		==
--ne : not equal to	!=
+-gt : grater than      >
+-ge : grater or equal  >=
+-lt : less than	       <
+-le : less or equal    <=
+-eq : equal to         ==
+-ne : not equal to     !=
 
 ==========================
 boolean logical operations
