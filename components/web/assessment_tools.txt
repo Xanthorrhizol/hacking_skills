@@ -1,7 +1,7 @@
 ====
 dirb
 ====
-
+directory bruteforce
 USAGE : dirb <url to scan>
 	-r : not recursivly
 	-z <time to milliseconds>: time to delay to each request
@@ -22,3 +22,35 @@ highly configurable open-source web server scanner
 nikto -host=<target url>
 	-maxtime <time in seconds>s : time limit
 	-T <type of test>
+
+======
+sqlmap
+======
+sqlmap -u <target url> -p "<parameter>"
+	-u <target url>
+	-p <parameter> specify the parameter
+	--dbms=<db software>   ex.mysql
+	--dump : dump the contents of all tables in the databases
+	--os-shell : execute a shell
+
+===========
+jwt-cracker
+===========
+jwt-cracker <token> [<alphabet>] [<maxLength>]
+
+=========
+xsrfprobe
+=========
+for CSRF
+xsrfprobe -u <url>/<endpoing>
+
+====
+fuzz
+====
+for forced browsing
+wfuzz -c -z <type>,<wordlist> <target url>/FUZZ/<target file>
+	-c : shows the output color
+	-z : specifies what will replace FUZZ in the request
+	--hc : don't show certain http response codes
+	--hl : don't show a certain amount of lines in the response
+	--hw : hide words(insert failed page's # of words)

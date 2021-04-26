@@ -1,4 +1,0 @@
-===============================================
-	XML Enternal Injection
-===============================================
-when an attacker is able to use the ENTITY feature of XML to load resources from outside the website directory.

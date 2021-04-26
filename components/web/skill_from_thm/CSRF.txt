@@ -1,6 +1,0 @@
-===============================================================
-	Cross Site Request Fogery
-===============================================================
-DOM injection => make viewer do something
-
-tool : xsrfprobe -u <url>/<endpoint>

