@@ -1,0 +1,48 @@
+================
+x86 architecture
+================
+program memory
+	1. structure
+		low memory address    0x00000000
+	                                          stack
+	                                          program image
+		                      0x00400000  process environment block (PEB)
+	                                          thread environment block (TEB)
+	                                          heap
+	
+	                              0x7FFDF000  dynamic link library (DLL)
+	                              0x7FFFFFFF  
+		high memory address   0xFFFFFFFF
+	2. function return mechanics
+		[thread stack frame example]
+		function A return address:  0x00401024
+		parameter 1 for function A: 0x00000040
+		parameter 2 for function A: 0x00001000
+		parameter 3 for function A: 0xFFFFFFFF
+	
+cpu registers
+	32-bit register
+	    = lower 16 bits
+	         + higher 8 bits 
+	              + lower 8 bits
+	EAX = AX + AH + AL
+	EBX = BX + BH + BL
+	ECX = CX + CH + CL
+	EDX = DX + DH + DL
+	ESI = SI + N/A + N/A
+	EDI = DI + N/A + N/A
+	EBP = BP + N/A + N/A
+	ESP = SP + N/A + N/A
+	EIP = IP + N/A + N/A
+
+general purpose registers
+	EAX : arithmetical and logical instructions
+	EBX : base pointer for memory address
+	ECX : loop shift rotaion counter
+	EDX : I/O port addressing, multiplication, division
+	ESI : pointer of data and source in string copy operations
+	EDI : pointer of data and destination in string copy operations
+pointer registers
+	ESP : the stack pointer
+	EBP : the base pointer
+	EIP : the instruction pointer - next code instruction to be executed

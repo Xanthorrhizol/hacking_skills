@@ -1,0 +1,22 @@
+=====
+steps
+=====
+1. pass argument to make overflow
+2. overwrite EIP register
+
+=================
+immunity debugger
+=================
+F9 : run
+F7 : step into
+F8 : step over
+ctrl + F9 : execute until returned(show result of the function)
+
+on linux, use ollydbg
+it has same shortcut keys
+
+
+=============
+assembly tips
+=============
+RETN : pops the value at the top of stack into EIP
