@@ -1,0 +1,7 @@
+discovering the vulnerability
+=============================
+sourcode review : easy
+fuzzing
+	HTTP protocol
+		login mechanism
+		
