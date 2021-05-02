@@ -1,7 +1,26 @@
+=============================
 discovering the vulnerability
 =============================
 sourcode review : easy
 fuzzing
 	HTTP form
 		./fuzzer.py <request file> <host ip> <target form tag name> <start length> <step size> <end length>
+
+=====================
+replicating the crash
+=====================
+It's included in fuzzer.py
+
+===============
+controlling EIP
+===============
+binary tree analysis
+	binary search
+non-repeatig 4-byte thunks
+	msf-pattern_create -l <length>
+	msf-pattern_offset -l <length> -q <overwrited EIP>
+
+===============================
+locating space for my shellcode
+===============================
 
