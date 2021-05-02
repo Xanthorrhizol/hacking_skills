@@ -14,7 +14,7 @@ print("--------------------------------")
 print("    created by Xanthorrhizol")
 print(" (xanthorrhizol@protonmail.com)")
 print("================================")
-print("\nIt is a python script to find offset to do BOF.")
+print("\nIt is a python script to find offset to do BOF. Using non-repeating 4-byte thunks(msf-pattern_create)")
 print("\nIt can crash the target system.\nDON'T USE THIS FOR ATTACK OTHER SYSTEM.\nThe creater don't take responsability for other user's usage.\n\n")
 agree = input("Agree and start?[y/N]\t")
 if agree != "y" and agree != "Y":

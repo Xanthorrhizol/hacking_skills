@@ -11,16 +11,31 @@ replicating the crash
 =====================
 It's included in fuzzer.py
 
-===============
-controlling EIP
-===============
+=================
+find EIP location
+=================
 binary tree analysis
 	binary search
 non-repeatig 4-byte thunks
 	msf-pattern_create -l <length>
 	msf-pattern_offset -l <length> -q <overwrited EIP>
 
-===============================
-locating space for my shellcode
-===============================
-
+=======
+exploit
+=======
+1. fill the buffer
+2. fill the EIP
+3. checking for bad characters
+	removing bad characters: bad character makes ESP dump part suddenly stopped with filled with null byte
+4. redirecting the execution flow
+	now, the hard coded address doesn't work. So go to next.
+5. finding a return address
+	find "JMP ESP" in some module that is imported in static address
+	msf-nasm_shell : it returns machine language from assembly
+		ex. jmp esp --> FFE4
+	<debugger command>
+		!mona modules : module list with address
+		!mona find -s "<hex code>" -m "<module name>"
+6. generating shellcode with metasploit - to do
+7. getting a shell
+8. improving the exploit
