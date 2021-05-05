@@ -15,7 +15,10 @@ example
 client fingerprinting
 =====================
 useful tool : https://github.comm/Valve/fingerprintjs2/archive/master.zip
-extract it on web server and make post request with the fingerprint to my server
-find User-Agent information
-search it from developers.whatismybrowser.com
+	extract it on web server and make post request with the fingerprint to my server
+	find User-Agent information
+	search it from developers.whatismybrowser.com
 
+BeEF
+	sudo beef-xss
+	our webserver will hook the clients
