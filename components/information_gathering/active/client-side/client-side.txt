@@ -1,0 +1,21 @@
+voice phishing
+smishing...etc
+
+======================================
+social engineering client-side attacks
+======================================
+example
+	1. the resume is not opened in my version
+	   which MS word version are you use?
+	2. answer
+	3. make malicious word macro : open powershell and send reverse shell to attacker
+	4. send
+
+=====================
+client fingerprinting
+=====================
+useful tool : https://github.comm/Valve/fingerprintjs2/archive/master.zip
+extract it on web server and make post request with the fingerprint to my server
+find User-Agent information
+search it from developers.whatismybrowser.com
+
