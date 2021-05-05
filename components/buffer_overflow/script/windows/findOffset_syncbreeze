@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 if [ $# -ne 5 ]; then
-	echo -e "\nUsage : $0 <request file> <target ip> <target port> <user form tag name> <pattern length to use>"
+	echo -e "\nUsage : $0 <request file> <target ip> <target port> <target form input name> <pattern length>"
 	exit 1
 fi
 ./resources/findOffset.py $1 $2 $3 $4 $(msf-pattern_create -l $5)

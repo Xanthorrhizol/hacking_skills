@@ -5,7 +5,7 @@ import sys
 import os
 
 if len(sys.argv) != 6:
-    print("\n Usage : " + sys.argv[0] + " <request file> <host ip> <port> <target form tag name> <pattern>")
+    print("\n Usage : " + sys.argv[0] + " <request file> <target ip> <target port> <target form tag name> <pattern>")
     sys.exit(1)
 
 print("================================")

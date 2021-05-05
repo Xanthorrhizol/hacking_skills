@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+if [ $# -ne 3 ]; then
+	echo -e "\nUsage : $0 <target ip> <target port> <pattern length>"
+	exit 1
+fi
+./resources/findOffset.py $1 $2 $(msf-pattern_create -l $3)
