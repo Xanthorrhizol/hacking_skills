@@ -11,12 +11,25 @@ sudo docker run -d -t --name <container name> <os>
 ===================
 list the containers
 ===================
-sudo docker ps
+running
+	sudo docker ps
+all
+	??
 
 ===================
 enter the container
 ===================
 sudo docker exec -it <container name> <shell type>
+
+==================
+stop the container
+==================
+sudo docker kill <container name>
+
+====================
+delete the container
+====================
+sudo docker rm <container name>
 
 =======
 exploit
