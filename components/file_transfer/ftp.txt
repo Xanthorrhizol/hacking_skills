@@ -1,0 +1,6 @@
+open <attacker ip>
+USER <username>
+lab
+bin
+GET <filename>
+bye
