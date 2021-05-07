@@ -1,0 +1,10 @@
+===============================
+considerations and preparations
+===============================
+dangers of transferring attack tools
+	post-exploitation attack tools could be used by malicious parties which puts client's resources at risk
+	antivirus software which scans endpoint filesystems in search of pre-defined file signatures becomes a huge frustrations for us during this phase
+	so, try to use native tools on the compromised system first
+preparations
+	installing Pure-FTPd on kali
+	add ftp user and group(setup_ftpd.sh)
