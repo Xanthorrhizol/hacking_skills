@@ -1,0 +1,3 @@
+findstr
+/B : beginning of the line
+/C:<string> : find string
