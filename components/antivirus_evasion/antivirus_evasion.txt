@@ -1,0 +1,85 @@
+==================
+antivirus software
+==================
+prevent detect and remove malicious software
+added firewall website scan
+
+===================================
+methods of detecting malicious code
+===================================
+*virus reporting site : virustotal.com
+	when uploading something, it is shared as public
+
+signature-based detection
+	blacklist technology -> limited
+
+heuristic-based detection
+	rely on various rules
+	algorithms to determine whether or not an action is considered malicious
+	stepping in or decompile and detect the pattern
+
+behavior-based detection
+	dynamically analysis on emulated environment and detect malicious behavior
+
+=========================================
+bypassing antivirous detection techniques
+=========================================
+on-disk evasion
+	modifying malicious files physically stored on disk where can evade the AV detection
+	but AV file scanning is far improved, so modern malware usually use in-memory evasion method
+	techniques
+		1. packers
+		2. obfuscators
+		3. crypters
+		4. software protectors
+
+in-memory evasion
+	don't write any file on disk
+	techiniques
+		1. remote process memory injection
+			inject the payload to the valid running PE
+			most common method : leverging a set of windows apis
+			createremotetheread api
+		2. reflective DLL injection
+			store DLL written by the attacker in process memory
+			loadlibrary does not support loading a dll from memory
+			there is no windows api that can handle this
+			attacker has to write their own api that does not rely on a disk-based DLL
+		3. process hollowing
+			attacker first launch a non-malicious process in a suspended state
+			once launced, the image of the process is removed from memory and replaced with a malicious executable image
+			finally, the process is resumed
+		4. inline hooking
+			modyfying memory and introducing a hook or instructions that redirect the code execution into a function to point the execution flow to attacker's malicious code
+			upon executing attacker's malicious code, the flow will return back to the modified function and resume execution
+			it apears as if only the original code has executed
+
+===========================
+bypass AV detection example
+===========================
+powershell in-memory injection
+	scripts using interpreter are hard to detect
+	in-memory_injection.ps1
+	run
+		powershell
+		Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+		. .\in-memory_injection.ps1
+	*see the policy : Get-ExecutionPolicy -Scope CurrentUser
+
+if we use some scirpt once, AV machine learning algorithm can be run
+so, we need to create each adapted script for the target environment
+
+shellter
+	dynamic shellcode injection tool
+		1. change PE file section permissions
+		2. create new sections and so on
+		3. locate functions for the memory allocatioin, transfer and execution of attacker's payload using the existing PE import address table entries
+	usage
+		1. install using apt
+		2. sudo shellter
+		3. select executable file to hide payload
+		4. follow the process	
+	msf meterpreter payload
+		migrate process immediately after session creation
+			set AutoRunScript post/windows/manage/migrate
+		
