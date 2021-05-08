@@ -1,0 +1,18 @@
+prevent, detect and remove malidious software
+added firewall, website scan, etc
+
+===================================
+methods of detecting malicious code
+===================================
+*virus reporting site : virustotal.com
+	if upload something, it is shared on public
+
+1. signature-based detection
+	blacklist technology --> limited
+
+2. heuristic-based detection
+	rely on various rules
+	algotighms to determine whether or not an action is considered malicious
+
+3. behavior-based detection
+	dynamically analysis on emulated environment and detect malicious behavior
