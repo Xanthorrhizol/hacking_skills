@@ -63,10 +63,25 @@ enumerate and exploit the vulnerable program with process monitor
 =========================
 insecure file permissions
 =========================
+program runs as nt authority\system and didn't controlled the permission during the installation
+if Everyone can read / write / execute the program,
+
+step
+	1. Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object {$_.State -like 'Running'}
+	2. enumerate by icaacls
+		icacls "C:\Program Files\Serviio\bin\ServiioService.exe"
+	3. replace the vulnerable executable file to malicious executable file
+	4. restart the service. but the restarted user is not administrative user. so failed
+	5. find when the system restart the service with high privilege
+		wmic service where caption="Serviio" get name, caption, state, startmode
+		result : on booting, it automatically started
+	6. reboot
+		shutdown /r /t 0
 
 ==================================
 leveraging uniquoted service paths
 ==================================
+
 
 ==============================
 windows kernel vulnerabilities
