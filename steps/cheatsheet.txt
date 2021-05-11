@@ -1,0 +1,21 @@
+=============
+port scanning
+=============
+nmap <target ip> -p- --open | tee port.nmap
+
+=======================
+service banner grabbing
+=======================
+sudo nmap <target ip> -p<target ports> -sV | tee banner.nmap
+ssh
+	nc -nv <target ip> <target port>
+	sudo nmap <target ip> -p<target port> --script=ssh-hostkey | tee ssh-hostkey.nmap
+http
+	curl -i <target url> | tee http_banner.curl
+
+===================
+service enumeration
+===================
+http
+	curl -i -L <target url> | grep "title\|href" | sed -e 's/[[:space:]]*/./' | tee links.curl
+	curl -s -L <target url> | html2text -width '95' | uniq 
