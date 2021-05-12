@@ -1,0 +1,33 @@
+==================
+standard wordlists
+==================
+cewl <target url> -m <minimun length> -w <customed filename>
+
+======================
+custom password policy
+======================
+1. edit john option(/etc/john/john.conf)
+	find [List.Rules:Wordlist]
+	write regex rules in it
+
+2. create wordlist with john
+	john --wordlist=<wordlist> --rules --stdout > <output filename>
+
+=====================
+brute-force wordlists
+=====================
+crunch <minimum length> <maximum length> -t <rule pattern>
+	ex. crunch 8 8 -t ,,@@%%^^
+crunch <minimum length> <maximum length> <character set> -o <output file>
+	ex. crunch 4 6 0123456789ABCDEF -o crunch.txt
+crunch <minimum length> <maximum length> -f <character set file> <character set name> -o <output file>
+	ex. crunch 4 6 /usr/share/crunch/charset.lst mixalpha -o crunch.txt
+	(rule pattern)
+	   placeholder	| character translation
+	-----------------------------------------------------
+		@	| lower case alpha characters
+		,	| upper case alpha characters
+		%	| Numeric characters
+		^	| special characters including space
+	character set
+		/usr/share/crunch/charset.lst
