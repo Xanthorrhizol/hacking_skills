@@ -81,8 +81,34 @@ step
 ==================================
 leveraging uniquoted service paths
 ==================================
+Windows 7
+when the file path contain space but no quotes, windows try to find valid path/executable file
+	ex. C:\\Program Files\My Program\My Service/service.exe
+		--> C:\\Program.exe
+		--> C:\\Program Files\My.exe
+		--> C:\\Program Files\My Program\My.exe
+		--> C:\\Program Files\My Program\My Service/service.exe
+step
+	1. find the path containing space but no quoted
+		wmic service get displaynanme,pathname
+	2. inject a malicious file into possible path
+		ex. copy <malicious file> C:\\Program Files\My.exe	
 
 
 ==============================
 windows kernel vulnerabilities
 ==============================
+step
+	1. check the system architecture
+		systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
+	2. enumerate driver
+		driverquery /v
+	3. search the vulnerability
+		searchsploit
+	4. exploit
+
+========================
+compile C/C++ on windows
+========================
+download mingw-w64 and run mingw-w64.bat
+use gcc

