@@ -5,7 +5,48 @@ allows tunnel on local port to the remote server using ssh
 list the networks
 	ip a
 make custom firewall rule on victim
-	run ssh_local_port_forwarding.sh
+	# Clear iptables rules
+	iptables -P INPUT ACCEPT
+	iptables -P FORWARD ACCEPT
+	iptables -P OUTPUT ACCEPT
+	iptables -F
+	iptables -X
+
+	# SSH Scenario
+	iptables -F
+	iptables -P INPUT DROP
+	iptables -P FORWARD DROP
+	iptables -A INPUT -i lo -j ACCEPT
+	iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+	#   Allow the target protocol and port
+	iptables -A INPUT -p <protocol(tcp|udp)> --dport <port> -m state --state NEW -j ACCEPT
+	iptables -A INPUT -i lo -j ACCEPT
+
+	# Clear iptables rules
+	iptables -P INPUT ACCEPT
+	iptables -P FORWARD ACCEPT
+	iptables -P OUTPUT ACCEPT
+	iptables -F
+	iptables -X
+
+	# SSH Scenario
+	iptables -F
+	iptables -P INPUT DROP
+	iptables -P FORWARD DROP
+	iptables -A INPUT -i lo -j ACCEPT
+	iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+	#   Allow the target protocol and port
+	iptables -A INPUT -p <protocol(tcp|udp)> --dport <port> -m state --state NEW -j ACCEPT
+	iptables -A INPUT -i lo -j ACCEPT
+
 start port forwarding with ssh
 	ssh -N -L [bind_address:]port:host:hostport [username@address]
 	ex. sudo ssh -N -L 0.0.0.0:445:192.168.1.110:445 student@10.11.0.128
+
+==========================
+ssh remote port forwarding
+==========================
+
+===========================
+ssh dynamic port forwarding
+===========================
