@@ -1,0 +1,11 @@
+=========================
+ssh local port forwarding
+=========================
+allows tunnel on local port to the remote server using ssh
+list the networks
+	ip a
+make custom firewall rule on victim
+	run ssh_local_port_forwarding.sh
+start port forwarding with ssh
+	ssh -N -L [bind_address:]port:host:hostport [username@address]
+	ex. sudo ssh -N -L 0.0.0.0:445:192.168.1.110:445 student@10.11.0.128

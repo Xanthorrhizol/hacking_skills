@@ -1,0 +1,13 @@
+======
+rinetd
+======
+port forwarding tool
+1. setting
+	/etc/rinetd.conf
+	ex. bindaddress	bindport	connectaddress	connectport
+	    0.0.0.0	80		216.58.207.142	80
+
+2. restart rinetd service
+	sudo service rinetd restart
+3. check the result
+	ss -antp | grep "80"
