@@ -1,52 +1,74 @@
 =========================
 ssh local port forwarding
 =========================
-allows tunnel on local port to the remote server using ssh
+attacker --forwarding--> victim:22 ----> target
+      
 list the networks
 	ip a
-make custom firewall rule on victim
-	# Clear iptables rules
-	iptables -P INPUT ACCEPT
-	iptables -P FORWARD ACCEPT
-	iptables -P OUTPUT ACCEPT
-	iptables -F
-	iptables -X
 
-	# SSH Scenario
-	iptables -F
-	iptables -P INPUT DROP
-	iptables -P FORWARD DROP
-	iptables -A INPUT -i lo -j ACCEPT
-	iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-	#   Allow the target protocol and port
-	iptables -A INPUT -p <protocol(tcp|udp)> --dport <port> -m state --state NEW -j ACCEPT
-	iptables -A INPUT -i lo -j ACCEPT
+firewall state
+	IN			OUT
+	3389/tcp	<--->	*
+	22/tcp		<--->	*
+	8080/tcp	<--->	*
+	* 		<--->	lo interface
+	*		<-/->	*
 
-	# Clear iptables rules
-	iptables -P INPUT ACCEPT
-	iptables -P FORWARD ACCEPT
-	iptables -P OUTPUT ACCEPT
-	iptables -F
-	iptables -X
+initial port forwarding state
+	3389/tcp	---->	victim
+	22/tcp		---->	victim
+	8080/tcp	---->	victim
 
-	# SSH Scenario
-	iptables -F
-	iptables -P INPUT DROP
-	iptables -P FORWARD DROP
-	iptables -A INPUT -i lo -j ACCEPT
-	iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-	#   Allow the target protocol and port
-	iptables -A INPUT -p <protocol(tcp|udp)> --dport <port> -m state --state NEW -j ACCEPT
-	iptables -A INPUT -i lo -j ACCEPT
-
-start port forwarding with ssh
-	ssh -N -L [bind_address:]port:host:hostport [username@address]
-	ex. sudo ssh -N -L 0.0.0.0:445:192.168.1.110:445 student@10.11.0.128
+port forwarding with ssh
+	ssh -N -L <bind_address>:<port>:<host>:<hostport> <username>@<victim address>
+	sudo ssh -N -L 0.0.0.0:445:192.168.1.110:445 student@10.11.0.128
 
 ==========================
 ssh remote port forwarding
 ==========================
+attacker:22 --------------> victim ----> target
+            <--forwarding--
+
+firewall state
+	IN			OUT
+	3389/tcp	<--->	*
+	*		<--->	lo interface
+	*		<-/->	*
+
+initial port forwarding state
+	INBOUND			FORWARD
+	3389/tcp	---->	victim
+
+port forwarding with ssh
+	ssh -N -R <bind_address>:<port>:<host>:<hostport> <username>@<attacker address>
+	sudo ssh -N -R 10.11.0.4:2221:127.0.0.1:3306 kali@10.11.0.4
 
 ===========================
 ssh dynamic port forwarding
 ===========================
+
+firewall state
+	IN			OUT
+	3389/tcp	<--->	*
+	22/tcp		<--->	*
+	8080/tcp	<--->	*
+	* 		<--->	lo interface
+	*		<-/->	*
+
+initial port forwarding state
+	INBOUND			FORWARD
+	3389/tcp	---->	victim
+	22/tcp		---->	victim
+	8080/tcp	---->	victim
+
+port forwarding with ssh
+	ssh -N -D <address to bind to>:<port to bind to> <username>@<SSH server address>
+	sudo ssh -N -D 127.0.0.1:8080 student@10.11.0.128
+
+configure the proxy
+	/etc/proxychains4.conf or /etc/proxychains.conf
+	socks4 <address to bind to> <port to bind to>
+
+check the result(scan the network)
+	proxychains nmap --top-ports=20 -sT -Pn <target ip>
+

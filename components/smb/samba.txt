@@ -1,0 +1,4 @@
+just link
+	smbclient -L <target ip> --port=<target port> --user=<username>
+mount
+	sudo mount -t cifs -o port=<target port> //<target ip>/<target dir> -o username=<username>,password=<password> <mountpoint>

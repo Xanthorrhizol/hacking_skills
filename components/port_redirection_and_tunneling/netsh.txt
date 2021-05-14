@@ -1,0 +1,12 @@
+===============================
+netsh : windwos network setting
+===============================
+attacker --> victim:4455 --> target:445
+
+set
+	netsh interface portproxy add v4tov4 listenport=<victim port> listenaddress=<victim ip> connectport=<target port> connectaddress=<target ip>
+	netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddres=192.168.1.110
+
+set firewall
+	netsh advfirewall firewall add rule name="<name>" protocol=<TCP|UDP> dir=<in|out> localip=<victim ip> localport=<victim port> action allow
+	netwh advfirewall firewall add rule name="forward_port_rule" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow

