@@ -1,0 +1,80 @@
+===================
+NTLM authentication
+===================
+authenticates to a server by ip address instead of by hostname
+if the user attempts to authenticate to a hostname that is not registered on the active directory (AD) integrated DNS server
+
+steps
+
+client			│ application server		│ domain controller(DC)
+────────────────────────┼───────────────────────────────┼───────────────────────────────
+1. calculate NTLM hash--->2. username			│
+3. nonce(random value)<---				│
+		      --->4. response(encrypted nonce)--->5.response, username, nonce
+		      	│				│ 6. encrypt nonce with NTLM hash
+		      	│				│   and compare to response
+		      	│				│ 7. approve authentication
+		      	
+=======================
+kerberos authentication
+=======================
+microsoft's primary authentication mechanism since windows server 2003
+uses ticket system
+authenticate to a service in AD(DC's key distribution center(KDC) service)
+
+authentication
+	1. authentication server request from client to KDC(DC)
+		encrypted time stamp using a hash derived from the password of the user and the username
+
+	2. authenticate from KDC
+		look up the password hash associate with the specific user and attempts to decrypt the time stamp
+		success : decryption process is successful & the time stamp is not duplicate
+	
+	3. authentication server reply from KDC to client
+		session key
+			encrypted using the user's password hash
+			since kerberos is stateless
+		ticket granting ticket(TGT)
+			contains information regarding the user
+				group memberships, the domain, a time stamp, ip address of the client and the session key
+			encrypted by a secret key
+
+service ticket granting
+	1. ticket granting service request from client to KDC
+		current user & timestamp
+			encrypted using the session key
+		the SPN of that resource
+		encrypted TGT
+	2. verification
+		SPN exists in the domain
+		the TGT is decrypted using the secret key
+		session key is extracted from the TGT
+		decrypt the username & time stamp of the request using the extracted session key
+			
+	3. ticket granting server reply from KDC to client
+		SPN
+			encrypted using TGT's session key
+		session key
+			encrypted using TGT's session key
+		service ticket
+			encrypted using the password hash of the service account registered with the SPN in question
+			username, group members, new session key
+
+service authentication
+	1. application request from client to application server
+		username
+		time stamp
+			encrypted with the session key(service ticket's)
+	2.authentication
+		decrypts the service ticket using service account password hash
+			extracts the suername and the session key
+		decrypt the username from the application request
+			using the extracted session key
+	3. service authentication from application server to client
+		inspects the supplied group memberships in the service ticket
+		assigns appropriate permissions to the user user
+
+=======================================
+cached credential storage and retrieval
+=======================================
+

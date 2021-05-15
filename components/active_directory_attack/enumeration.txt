@@ -1,0 +1,60 @@
+domain controller(DC) can controll all of internal devices
+so, the target is user in domain admin group
+
+==============================
+traditional approach : net.exe
+==============================
+enumerate local accounts
+	net user
+
+enumerate all accounts in same domain
+	net user /domain
+
+enumerate specific user account in same domain
+	net user <username> /domain
+
+enumerate all groups in same domain
+	net group /domain
+
+==============================
+a modern approach : powershell
+==============================
+see enumerateAD_user.ps1
+
+=================================
+resolving nested groups : net.exe
+=================================
+see enumerateAD_group.ps1
+
+=========================
+currently logged on users
+=========================
+logged in user
+	NetWkstaUserEnum : returns the list of all users logged on to a target workstation
+				*requires administrative permissions
+	NetSessionEnum : returns a list of active user sessions on servers(ex. fileserver, DC)
+				*can be used as a regular domain user
+	*not straightforward...
+
+PowerView.ps1
+	1. import
+		Import-Module .\PowerView.ps1
+	2. use
+		Get-NetLoggedOn --> NetWkstaUserEnum
+			Get-NetLoggedOn -ComputerName <target machine>
+			ex. Get-NetLoggedOn -ComputerName client251
+		Get-NetSession --> NetSessionEnum
+			Get-NetSession -ComputerName <target machine>
+			ex. Get-NetSession -ComputerName dc01
+
+===========================================
+enumeration through service principal names
+===========================================
+isolated applications can use a set of predefined service accounts
+	ex. LocalSystem, LocalService, NetworkService
+service principal name(SPN)
+	associate a service on a specific server to service account in active directory(AD)
+	can obtain ip address & port of applications running on servers integrated with the AD by enumerating this
+enumerate : see enumerateAD_SPN.ps1
+detailed information of SPN
+	nslookup <SPN>
