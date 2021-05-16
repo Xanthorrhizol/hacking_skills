@@ -47,9 +47,9 @@ PowerView.ps1
 			Get-NetSession -ComputerName <target machine>
 			ex. Get-NetSession -ComputerName dc01
 
-===========================================
-enumeration through service principal names
-===========================================
+================================================
+enumeration through service principal names(SPN)
+================================================
 isolated applications can use a set of predefined service accounts
 	ex. LocalSystem, LocalService, NetworkService
 service principal name(SPN)

