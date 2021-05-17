@@ -1,0 +1,2 @@
+module
+	auxiliary/scanner/rdp/rdp_scanner

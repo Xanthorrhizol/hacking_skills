@@ -1,0 +1,37 @@
+help
+	<command> -h option
+
+search
+	search <keyword>
+
+select module
+	use <module name>
+
+use previous module
+	previous
+
+view options
+	show options
+
+set
+	set <option> <value>
+
+unset
+	unset <option>
+
+view module infomation
+	info
+
+gained credential list
+	creds
+
+check whether the target is vulnerable
+	check
+
+session
+	list : sessions -l
+	start interaction : sessions -i <session number>
+	background the session : background
+
+make payload
+	msfvenom -p <payload module> LHOST=<attacker ip> LPORT=<listening port> -f <format> -e <endoder> -b "<bad characters>"

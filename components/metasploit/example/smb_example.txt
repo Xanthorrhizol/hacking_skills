@@ -1,0 +1,9 @@
+modules
+	auxiliary/scanner/smb/smb2
+	auxiliary/scanner/smb/smb_login
+
+smb2
+	detect systems that support the SMB 2.0 protocol
+
+smb_login
+	test a SMB login on a range of machines

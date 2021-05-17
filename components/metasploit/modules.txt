@@ -1,0 +1,65 @@
+=====
+basic
+=====
+search module
+	search <keyword>
+		type:<type>
+		name:<keyword>
+	ex. search type:auxiliary name:smb
+
+options
+	set rhosts automatically
+		services -p <target port> --rhosts
+
+exploit
+	run
+	exploit
+
+=========
+auxiliary
+=========
+provide protocol enumeration, port scanning, fuzzing, sniffing and more
+
+search module
+	search <keyword>
+		type:<type>
+		name:<keyword>
+	ex. search type:auxiliary name:smb
+
+options
+	set rhosts automatically
+		services -p <target port> --rhosts
+
+exploit
+	run
+	exploit
+
+=======
+exploit
+=======
+check whether the target is vulnerable
+	check
+
+multi/handler
+	listen the request of reverse shell
+	can set payload
+
+=============
+multi handler
+=============
+listen the request of reverse shell
+can set payload
+
+================================
+advanced features and transports
+================================
+advanced features
+	show advanced
+
+helpful to bypass the detection
+	set EnableStageEncoding true
+	set StageEncoder x86/shikata_ga_nai
+
+start script automatically when the shell connected
+	set AutoRunScript <script>
+	ex. set AutoRunScript windows/gather/enum_logged_on_users

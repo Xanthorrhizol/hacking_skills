@@ -1,0 +1,8 @@
+use ruby
+it's similar with python
+
+1. copy a module which has simillar target or logic
+	copy it in /root/.msf4 directory
+	the search command has this directory in the scope
+2. edit
+3. done

