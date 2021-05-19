@@ -16,6 +16,17 @@ http
 ===================
 service enumeration
 ===================
-http
+web application
+-------------------
+internal&external links
 	curl -i -L <target url> | grep "title\|href" | sed -e 's/[[:space:]]*/./' | tee links.curl
+
+html render
 	curl -s -L <target url> | html2text -width '95' | uniq 
+
+hidden
+	curl <target url> -s | html2text
+
+url bruteforce
+	gobuster dir -u <target url> -w <wordlist> -s '<success rescodes>' -e
+
