@@ -12,7 +12,7 @@ F7 : step into
 F8 : step over
 ctrl + F9 : execute until returned(show result of the function)
 
-on linux, use ollydbg
+on linux, use edb
 it has same shortcut keys
 
 
