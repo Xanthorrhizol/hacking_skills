@@ -1,0 +1,7 @@
+====================
+resource script(.rc)
+====================
+metasploit command script
+same with using msfconsole command
+run : sudo msfconsole -r <rc file>
+example : example.rc

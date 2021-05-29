@@ -1,7 +1,7 @@
 ================
 email harvesting
 ================
-theharvester -d <url> -b <data source to search>
+theHarvester -d <url> -b <data source to search>
 
 ==============
 password dumps
