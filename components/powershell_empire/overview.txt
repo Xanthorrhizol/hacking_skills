@@ -1,0 +1,12 @@
+powershell & python post-exploitation agent with a heav focus on client-side exploitation & post-exploitation of AD deployments
+
+powershell on windows
+python on linux and unix/mac os
+requirement(preinstalled library)
+	powershell : version 2
+	python : 2.6 or 2.7 (ah......)
+
+empire vs metasploit
+	metasploit : focused on gaining initial access
+	empire : focused on post-exploitation
+		(good at AD, especially)
